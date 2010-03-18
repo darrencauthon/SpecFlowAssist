@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecFlowAssist", "SpecFlowAssist\SpecFlowAssist.csproj", "{C4A7C716-A592-48DB-BF6C-B53F112109CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecFlowAssist.Tests", "SpecFlowAssist.Tests\SpecFlowAssist.Tests.csproj", "{9D2FB8ED-B95F-4C76-978F-F55D3FBF37B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{C4A7C716-A592-48DB-BF6C-B53F112109CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4A7C716-A592-48DB-BF6C-B53F112109CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4A7C716-A592-48DB-BF6C-B53F112109CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D2FB8ED-B95F-4C76-978F-F55D3FBF37B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D2FB8ED-B95F-4C76-978F-F55D3FBF37B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D2FB8ED-B95F-4C76-978F-F55D3FBF37B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D2FB8ED-B95F-4C76-978F-F55D3FBF37B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
