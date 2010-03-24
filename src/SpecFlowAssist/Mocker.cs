@@ -1,4 +1,5 @@
-﻿using AutoMoq;
+﻿using System.Collections.Generic;
+using AutoMoq;
 using Moq;
 using TechTalk.SpecFlow;
 
@@ -6,22 +7,41 @@ namespace SpecFlowAssist
 {
     public static class Mocker
     {
-        public static Mock<T> GetMock<T>() where T : class
+        private const string MockerId = "__Mocker__";
+
+        public static Mock<T> GetMock<T>(this ScenarioContext scenarioContext) where T : class
         {
-            return GetAutoMoqer().GetMock<T>();
+            SetupTheAutoMockerIfNecessary(scenarioContext);
+            return GetTheAutoMocker(scenarioContext).GetMock<T>();
         }
 
-        public static T Resolve<T>()
+        public static T Resolve<T>(this ScenarioContext scenarioContext)
         {
-            return GetAutoMoqer().Resolve<T>();
+            SetupTheAutoMockerIfNecessary(scenarioContext);
+            return GetTheAutoMocker(scenarioContext).Resolve<T>();
         }
 
-        public static AutoMoqer GetAutoMoqer()
+        private static void SetupTheAutoMockerIfNecessary(ScenarioContext scenarioContext)
         {
-            if (!ScenarioContext.Current.ContainsKey("Mocker"))
-                ScenarioContext.Current["Mocker"] = new AutoMoqer();
+            if (TheAutoMockerHasNotBeenSetup(scenarioContext))
+                SetupTheAutoMocker(scenarioContext);
+        }
 
-            return (AutoMoqer)ScenarioContext.Current["Mocker"];
+        private static AutoMoqer GetTheAutoMocker(IDictionary<string, object> scenarioContext)
+        {
+            return (AutoMoqer)scenarioContext[MockerId];
+        }
+
+        private static object SetupTheAutoMocker(IDictionary<string, object> scenarioContext)
+        {
+            return scenarioContext[MockerId] = new AutoMoqer();
+        }
+
+
+
+        private static bool TheAutoMockerHasNotBeenSetup(ScenarioContext scenarioContext)
+        {
+            return !scenarioContext.ContainsKey(MockerId);
         }
     }
 }
