@@ -37,9 +37,7 @@ namespace SpecFlowAssist
             return scenarioContext[MockerId] = new AutoMoqer();
         }
 
-
-
-        private static bool TheAutoMockerHasNotBeenSetup(ScenarioContext scenarioContext)
+        private static bool TheAutoMockerHasNotBeenSetup(IDictionary<string, object> scenarioContext)
         {
             return !scenarioContext.ContainsKey(MockerId);
         }
