@@ -5,7 +5,7 @@ using TechTalk.SpecFlow;
 
 namespace SpecFlowAssist
 {
-    public static class Mocker
+    public static class MockerExtensionMethods
     {
         private const string MockerId = "__Mocker__";
 

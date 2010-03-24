@@ -3,7 +3,7 @@ using TechTalk.SpecFlow;
 
 namespace SpecFlowAssist
 {
-    public static class Context
+    public static class ObjectPersistenceExtensionMethods
     {
         public static T Get<T>(this ScenarioContext scenarioContext, string id) where T : class
         {
