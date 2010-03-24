@@ -5,38 +5,38 @@ namespace SpecFlowAssist
 {
     public static class Context
     {
-        public static T Get<T>(string id) where T : class
+        public static T Get<T>(this ScenarioContext scenarioContext, string id) where T : class
         {
-            return ScenarioContext.Current[id] as T;
+            return scenarioContext[id] as T;
         }
 
-        public static T Get<T>(Type type) where T : class
+        public static T Get<T>(this ScenarioContext scenarioContext, Type type) where T : class
         {
             var id = type.ToString();
-            return Get<T>(id);
+            return scenarioContext.Get<T>(id);
         }
 
-        public static T Get<T>() where T : class
+        public static T Get<T>(this ScenarioContext scenarioContext) where T : class
         {
             var id = typeof (T).ToString();
-            return Get<T>(id);
+            return scenarioContext.Get<T>(id);
         }
 
-        public static void Set<T>(T data, string id)
+        public static void Set<T>(this ScenarioContext scenarioContext, T data, string id)
         {
-            ScenarioContext.Current[id] = data;
+            scenarioContext[id] = data;
         }
 
-        public static void Set<T>(T data, Type type)
+        public static void Set<T>(this ScenarioContext scenarioContext, T data, Type type)
         {
             var id = type.ToString();
-            Set(data, id);
+            scenarioContext.Set(data, id);
         }
 
-        public static void Set<T>(T data)
+        public static void Set<T>(this ScenarioContext scenarioContext, T data)
         {
             var id = data.GetType().ToString();
-            Set(data, id);
+            scenarioContext.Set(data, id);
         }
     }
 }
