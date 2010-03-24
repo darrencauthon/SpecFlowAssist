@@ -57,19 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CamelCaseToWordTranslatorStepDefinitions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WordToCamelCaseTranslation.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WordToCamelCaseTranslation.feature</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="WordToCamelCaseTranslation.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>WordToCamelCaseTranslation.feature.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpecFlowAssist\SpecFlowAssist.csproj">
