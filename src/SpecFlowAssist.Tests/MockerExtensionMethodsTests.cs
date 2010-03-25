@@ -12,7 +12,7 @@ namespace SpecFlowAssist.Tests
         public void GetMock_Called_LoadsAutoMoqerIntoScenarioContext()
         {
             var scenarioContext = CreateScenarioContext();
-            scenarioContext.GetMock<ITestInterface>();
+            scenarioContext.GetMock<IScenarioTestInterface>();
             Assert.IsTrue(scenarioContext.ContainsKey(MockerId));
         }
 
@@ -21,10 +21,10 @@ namespace SpecFlowAssist.Tests
         {
             var scenarioContext = CreateScenarioContext();
 
-            scenarioContext.GetMock<ITestInterface>();
+            scenarioContext.GetMock<IScenarioTestInterface>();
             var firstMocker = scenarioContext[MockerId];
 
-            scenarioContext.GetMock<ITestInterface>();
+            scenarioContext.GetMock<IScenarioTestInterface>();
             var secondMocker = scenarioContext[MockerId];
 
             Assert.AreSame(firstMocker, secondMocker);
@@ -34,7 +34,7 @@ namespace SpecFlowAssist.Tests
         public void GetMock_Called_ReturnsMock()
         {
             var scenarioContext = CreateScenarioContext();
-            var mock = scenarioContext.GetMock<ITestInterface>().Object;
+            var mock = scenarioContext.GetMock<IScenarioTestInterface>().Object;
             Assert.IsNotNull(mock);
         }
 
@@ -42,7 +42,7 @@ namespace SpecFlowAssist.Tests
         public void Resolve_Called_LoadsAutoMoqerIntoScenarioContext()
         {
             var scenarioContext = CreateScenarioContext();
-            scenarioContext.Resolve<TestClass>();
+            scenarioContext.Resolve<ScenarioTestClass>();
             Assert.IsTrue(scenarioContext.ContainsKey(MockerId));
         }
 
@@ -51,10 +51,10 @@ namespace SpecFlowAssist.Tests
         {
             var scenarioContext = CreateScenarioContext();
 
-            scenarioContext.Resolve<TestClass>();
+            scenarioContext.Resolve<ScenarioTestClass>();
             var firstMocker = scenarioContext[MockerId];
 
-            scenarioContext.Resolve<TestClass>();
+            scenarioContext.Resolve<ScenarioTestClass>();
             var secondMocker = scenarioContext[MockerId];
 
             Assert.AreSame(firstMocker, secondMocker);
@@ -64,7 +64,7 @@ namespace SpecFlowAssist.Tests
         public void Resolve_Called_ReturnsMock()
         {
             var scenarioContext = CreateScenarioContext();
-            var testClass = scenarioContext.Resolve<TestClass>();
+            var testClass = scenarioContext.Resolve<ScenarioTestClass>();
             Assert.IsNotNull(testClass);
         }
 
@@ -74,11 +74,11 @@ namespace SpecFlowAssist.Tests
         }
     }
 
-    public interface ITestInterface
+    public interface IMockerTestInterface
     {
     }
 
-    public class TestClass
+    public class MockerTestClass
     {
     }
 }

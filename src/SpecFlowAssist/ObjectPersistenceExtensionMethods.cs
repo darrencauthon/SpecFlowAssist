@@ -35,8 +35,9 @@ namespace SpecFlowAssist
 
         public static void Set<T>(this ScenarioContext scenarioContext, T data)
         {
-            var id = data.GetType().ToString();
+            var id = typeof(T).ToString();
             scenarioContext.Set(data, id);
         }
     }
+
 }
