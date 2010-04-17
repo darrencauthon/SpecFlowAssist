@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecFlowAssist", "SpecFlowAssist\SpecFlowAssist.csproj", "{C4A7C716-A592-48DB-BF6C-B53F112109CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecFlowAssist.Tests", "SpecFlowAssist.Tests\SpecFlowAssist.Tests.csproj", "{9D2FB8ED-B95F-4C76-978F-F55D3FBF37B5}"
