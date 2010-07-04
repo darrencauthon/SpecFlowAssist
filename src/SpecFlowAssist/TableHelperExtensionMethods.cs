@@ -12,15 +12,52 @@ namespace SpecFlowAssist
             var enumerable = table.Rows.Select(row =>
                                                    {
                                                        var instance = (T) Activator.CreateInstance(typeof (T));
+
                                                        SetStringValues(table, instance, row);
                                                        SetIntValues(table, instance, row);
                                                        SetsDateTimeValues(table, instance, row);
                                                        SetsDecimalValues(table, instance, row);
                                                        SetsBooleanValues(table, instance, row);
+
+                                                       SetsNullableDateTimeValues(table, instance, row);
+                                                       SetsNullableBooleanValues(table, instance, row);
+                                                       SetsNullableIntValues(table, instance, row);
+                                                       SetsNullableDecimalValues(table, instance, row);
+
                                                        return instance;
                                                    });
 
             return enumerable;
+        }
+
+        private static void SetsNullableDecimalValues<T>(Table table, T instance, TableRow row)
+        {
+            var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, typeof (decimal?));
+            foreach (var property in propertiesToUpdate)
+                if (string.IsNullOrEmpty(row[property]))
+                    instance.SetPropertyValue(property, null);
+                else
+                    instance.SetPropertyValue(property, row.GetDecimal(property));
+        }
+
+        private static void SetsNullableIntValues<T>(Table table, T instance, TableRow row)
+        {
+            var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, typeof (int?));
+            foreach (var property in propertiesToUpdate)
+                if (string.IsNullOrEmpty(row[property]))
+                    instance.SetPropertyValue(property, null);
+                else
+                    instance.SetPropertyValue(property, row.GetInt(property));
+        }
+
+        private static void SetsNullableBooleanValues<T>(Table table, T instance, TableRow row)
+        {
+            var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, typeof (bool?));
+            foreach (var property in propertiesToUpdate)
+                if (string.IsNullOrEmpty(row[property]))
+                    instance.SetPropertyValue(property, null);
+                else
+                    instance.SetPropertyValue(property, row.GetBool(property));
         }
 
         private static void SetsBooleanValues<T>(Table table, T instance, TableRow row)
@@ -42,6 +79,16 @@ namespace SpecFlowAssist
             var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, typeof (DateTime));
             foreach (var property in propertiesToUpdate)
                 instance.SetPropertyValue(property, row.GetDateTime(property));
+        }
+
+        private static void SetsNullableDateTimeValues<T>(Table table, T instance, TableRow row)
+        {
+            var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, typeof (DateTime?));
+            foreach (var property in propertiesToUpdate)
+                if (string.IsNullOrEmpty(row[property]))
+                    instance.SetPropertyValue(property, null);
+                else
+                    instance.SetPropertyValue(property, row.GetDateTime(property));
         }
 
         private static void SetIntValues<T>(Table table, T instance, TableRow row)

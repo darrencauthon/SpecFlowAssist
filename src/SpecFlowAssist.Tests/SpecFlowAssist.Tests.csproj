@@ -64,12 +64,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateSetHelperMethodTests.cs" />
+    <Compile Include="TableHelperExtensionMethods\CreateSetHelperMethodTests.cs" />
     <Compile Include="ObjectPersistenceExtensionMethodsTests.cs" />
     <Compile Include="MockerExtensionMethodsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyExtensionMethodsTests.cs" />
     <Compile Include="RowExtensionMethodTests.cs" />
+    <Compile Include="TableHelperExtensionMethods\CreateSetWithNullableValuesTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpecFlowAssist\SpecFlowAssist.csproj">

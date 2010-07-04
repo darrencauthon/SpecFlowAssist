@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Should;
 using TechTalk.SpecFlow;
 
-namespace SpecFlowAssist.Tests
+namespace SpecFlowAssist.Tests.TableHelperExtensionMethods
 {
     [TestFixture]
     public class CreateSetHelperMethodTests
