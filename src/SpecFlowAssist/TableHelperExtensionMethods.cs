@@ -7,7 +7,7 @@ namespace SpecFlowAssist
 {
     public static class TableHelperExtensionMethods
     {
-        public static IEnumerable<T> ToSet<T>(this Table table)
+        public static IEnumerable<T> CreateSet<T>(this Table table)
         {
             var enumerable = table.Rows.Select(row =>
                                                    {

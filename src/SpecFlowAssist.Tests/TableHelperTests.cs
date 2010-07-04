@@ -22,7 +22,7 @@ namespace SpecFlowAssist.Tests
         public void Returns_empty_set_of_type_when_there_are_no_rows()
         {
             var table = new Table("FirstName");
-            var people = table.ToSet<Person>();
+            var people = table.CreateSet<Person>();
             people.Count().ShouldEqual(0);
         }
 
@@ -31,7 +31,7 @@ namespace SpecFlowAssist.Tests
         {
             var table = new Table("FirstName");
             table.AddRow("John");
-            var people = table.ToSet<Person>();
+            var people = table.CreateSet<Person>();
             people.Count().ShouldEqual(1);
         }
 
@@ -41,7 +41,7 @@ namespace SpecFlowAssist.Tests
             var table = new Table("FirstName");
             table.AddRow("John");
             table.AddRow("Howard");
-            var people = table.ToSet<Person>();
+            var people = table.CreateSet<Person>();
             people.Count().ShouldEqual(2);
         }
 
@@ -51,7 +51,7 @@ namespace SpecFlowAssist.Tests
             var table = new Table("FirstName", "LastName", "BirthDate", "NumberOfIdeas", "Salary", "IsRational");
             table.AddRow("John", "Galt", "", "", "", "");
 
-            var people = table.ToSet<Person>();
+            var people = table.CreateSet<Person>();
 
             people.First().FirstName.ShouldEqual("John");
             people.First().LastName.ShouldEqual("Galt");
@@ -63,7 +63,7 @@ namespace SpecFlowAssist.Tests
             var table = new Table("FirstName", "LastName", "BirthDate", "NumberOfIdeas", "Salary", "IsRational");
             table.AddRow("", "", "", "3", "", "");
 
-            var people = table.ToSet<Person>();
+            var people = table.CreateSet<Person>();
 
             people.First().NumberOfIdeas.ShouldEqual(3);
         }
@@ -74,7 +74,7 @@ namespace SpecFlowAssist.Tests
             var table = new Table("FirstName", "LastName", "BirthDate", "NumberOfIdeas", "Salary", "IsRational");
             table.AddRow("", "", "4/28/2009", "3", "", "");
 
-            var people = table.ToSet<Person>();
+            var people = table.CreateSet<Person>();
 
             people.First().BirthDate.ShouldEqual(new DateTime(2009, 4, 28));
         }
@@ -85,7 +85,7 @@ namespace SpecFlowAssist.Tests
             var table = new Table("FirstName", "LastName", "BirthDate", "NumberOfIdeas", "Salary", "IsRational");
             table.AddRow("", "", "4/28/2009", "3", "9997.43", "");
 
-            var people = table.ToSet<Person>();
+            var people = table.CreateSet<Person>();
 
             people.First().Salary.ShouldEqual(9997.43M);
         }
@@ -96,7 +96,7 @@ namespace SpecFlowAssist.Tests
             var table = new Table("FirstName", "LastName", "BirthDate", "NumberOfIdeas", "Salary", "IsRational");
             table.AddRow("", "", "4/28/2009", "3", "", "true");
 
-            var people = table.ToSet<Person>();
+            var people = table.CreateSet<Person>();
 
             people.First().IsRational.ShouldBeTrue();
         }
