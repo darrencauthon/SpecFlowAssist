@@ -46,6 +46,15 @@ namespace SpecFlowAssist.Tests
         }
 
         [Test]
+        public void GetInt_should_return_MinValue_when_the_value_is_empty()
+        {
+            var table = new Table("Count");
+            table.AddRow("");
+            table.Rows.First()
+                .GetInt("Count").ShouldEqual(int.MinValue);
+        }
+
+        [Test]
         public void GetDecimal_should_return_the_datetime_from_the_row()
         {
             var table = new Table("Amount");
@@ -64,6 +73,15 @@ namespace SpecFlowAssist.Tests
         }
 
         [Test]
+        public void GetDecimal_should_return_MinValue_when_the_value_is_empty()
+        {
+            var table = new Table("Amount");
+            table.AddRow("");
+            table.Rows.First()
+                .GetDecimal("Amount").ShouldEqual(decimal.MinValue);
+        }
+
+        [Test]
         public void GetDateTime_should_return_the_datetime_from_the_row()
         {
             var table = new Table("Birthdate");
@@ -79,6 +97,15 @@ namespace SpecFlowAssist.Tests
             table.AddRow("4/28/2009 21:02:03");
             table.Rows.First()
                 .GetDateTime("SomethingThatDoesNotExist").ShouldEqual(DateTime.MinValue);
+        }
+
+        [Test]
+        public void GetDateTime_should_return_MinValue_when_the_value_is_empty()
+        {
+            var table = new Table("Birthdate");
+            table.AddRow("");
+            table.Rows.First()
+                .GetDateTime("Birthdate").ShouldEqual(DateTime.MinValue);
         }
 
         [Test]
@@ -116,6 +143,15 @@ namespace SpecFlowAssist.Tests
                     exceptionThrown = true;
             }
             exceptionThrown.ShouldBeTrue();
+        }
+
+        [Test]
+        public void GetBool_returns_false_when_the_value_is_empty()
+        {
+            var table = new Table("IsNeat");
+            table.AddRow("");
+            table.Rows.First()
+                .GetBool("IsNeat").ShouldBeFalse();
         }
 
         [Test]

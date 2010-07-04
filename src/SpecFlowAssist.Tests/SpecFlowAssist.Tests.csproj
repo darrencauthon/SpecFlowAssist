@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TableHelperTests.cs" />
     <Compile Include="ObjectPersistenceExtensionMethodsTests.cs" />
     <Compile Include="MockerExtensionMethodsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

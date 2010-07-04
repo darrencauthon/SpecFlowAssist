@@ -16,29 +16,43 @@ namespace SpecFlowAssist
 
         public static int GetInt(this TableRow row, string id)
         {
-            return AValueWithThisIdExists(row, id)
+            return AValueWithThisIdExists(row, id) && TheValueIsNotEmpty(row, id)
                        ? Convert.ToInt32(row[id])
                        : int.MinValue;
         }
 
         public static decimal GetDecimal(this TableRow row, string id)
         {
-            return AValueWithThisIdExists(row, id)
+            return AValueWithThisIdExists(row, id) && TheValueIsNotEmpty(row, id)
                        ? Convert.ToDecimal(row[id])
                        : decimal.MinValue;
         }
 
         public static DateTime GetDateTime(this TableRow row, string id)
         {
-            return AValueWithThisIdExists(row, id)
+            return AValueWithThisIdExists(row, id) && TheValueIsNotEmpty(row, id)
                        ? Convert.ToDateTime(row[id])
                        : DateTime.MinValue;
         }
 
         public static bool GetBool(this TableRow row, string id)
         {
+            if (TheBooleanValueIsEmpty(row, id))
+                return false;
+
             AssertThatTheRequestIsValid(row, id);
+            
             return row[id] == "true";
+        }
+
+        private static bool TheBooleanValueIsEmpty(TableRow row, string id)
+        {
+            return AValueWithThisIdExists(row, id) && string.IsNullOrEmpty(row[id]);
+        }
+
+        private static bool TheValueIsNotEmpty(TableRow row, string id)
+        {
+            return string.IsNullOrEmpty(row[id]) == false;
         }
 
         private static void AssertThatTheRequestIsValid(TableRow row, string id)
