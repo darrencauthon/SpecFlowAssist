@@ -7,23 +7,11 @@ namespace SpecFlowAssist
 {
     public static class TableHelperExtensionMethods
     {
-        public static Dictionary<Type, Func<TableRow, string, object>> GetTypeHandlers()
-        {
-            return new Dictionary<Type, Func<TableRow, string, object>>
-                       {
-                           {typeof (string), (TableRow row, string id) => row.GetString("Value")},
-                           {typeof (int), (TableRow row, string id) => row.GetInt("Value")},
-                           {typeof (decimal), (TableRow row, string id) => row.GetDecimal("Value")},
-                           {typeof (bool), (TableRow row, string id) => row.GetBool("Value")},
-                           {typeof (DateTime), (TableRow row, string id) => row.GetDateTime("Value")}
-                       };
-        }
-
         public static T CreateInstance<T>(this Table table)
         {
             var instance = (T) Activator.CreateInstance(typeof (T));
 
-            var handlers = GetTypeHandlers();
+            var handlers = GetTypeHandlersForFieldValuePairs();
 
             (from property in typeof (T).GetProperties()
              join key in handlers.Keys on property.PropertyType equals key
@@ -55,6 +43,18 @@ namespace SpecFlowAssist
                                                    });
 
             return enumerable;
+        }
+
+        private static Dictionary<Type, Func<TableRow, string, object>> GetTypeHandlersForFieldValuePairs()
+        {
+            return new Dictionary<Type, Func<TableRow, string, object>>
+                       {
+                           {typeof (string), (TableRow row, string id) => row.GetString("Value")},
+                           {typeof (int), (TableRow row, string id) => row.GetInt("Value")},
+                           {typeof (decimal), (TableRow row, string id) => row.GetDecimal("Value")},
+                           {typeof (bool), (TableRow row, string id) => row.GetBool("Value")},
+                           {typeof (DateTime), (TableRow row, string id) => row.GetDateTime("Value")}
+                       };
         }
 
         private static void SetsNullableDecimalValues<T>(Table table, T instance, TableRow row)
