@@ -7,6 +7,33 @@ namespace SpecFlowAssist
 {
     public static class TableHelperExtensionMethods
     {
+        public static Dictionary<Type, Func<TableRow, string, object>> GetTypeHandlers()
+        {
+            return new Dictionary<Type, Func<TableRow, string, object>>
+                       {
+                           {typeof (string), (TableRow row, string id) => row.GetString("Value")},
+                           {typeof (int), (TableRow row, string id) => row.GetInt("Value")},
+                           {typeof (decimal), (TableRow row, string id) => row.GetDecimal("Value")},
+                           {typeof (bool), (TableRow row, string id) => row.GetBool("Value")},
+                           {typeof (DateTime), (TableRow row, string id) => row.GetDateTime("Value")}
+                       };
+        }
+
+        public static T CreateInstance<T>(this Table table)
+        {
+            var instance = (T) Activator.CreateInstance(typeof (T));
+
+            var handlers = GetTypeHandlers();
+
+            (from property in typeof (T).GetProperties()
+             join key in handlers.Keys on property.PropertyType equals key
+             join row in table.Rows on property.Name equals row["Field"]
+             select new {Row = row, property.Name, Handler = handlers[key]}).ToList()
+                .ForEach(x => instance.SetPropertyValue(x.Name, x.Handler(x.Row, x.Row["Value"])));
+
+            return instance;
+        }
+
         public static IEnumerable<T> CreateSet<T>(this Table table)
         {
             var enumerable = table.Rows.Select(row =>
