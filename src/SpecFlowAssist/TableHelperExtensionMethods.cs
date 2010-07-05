@@ -10,15 +10,7 @@ namespace SpecFlowAssist
         public static T CreateInstance<T>(this Table table)
         {
             var instance = (T) Activator.CreateInstance(typeof (T));
-
-            var handlers = GetTypeHandlersForFieldValuePairs();
-
-            (from property in typeof (T).GetProperties()
-             join key in handlers.Keys on property.PropertyType equals key
-             join row in table.Rows on property.Name equals row["Field"]
-             select new {Row = row, property.Name, Handler = handlers[key]}).ToList()
-                .ForEach(x => instance.SetPropertyValue(x.Name, x.Handler(x.Row, x.Row["Value"])));
-
+            LoadInstanceWithKeyValuePairs(table, instance);
             return instance;
         }
 
@@ -27,22 +19,30 @@ namespace SpecFlowAssist
             var enumerable = table.Rows.Select(row =>
                                                    {
                                                        var instance = (T) Activator.CreateInstance(typeof (T));
-
-                                                       SetStringValues(table, instance, row);
-                                                       SetIntValues(table, instance, row);
-                                                       SetsDateTimeValues(table, instance, row);
-                                                       SetsDecimalValues(table, instance, row);
-                                                       SetsBooleanValues(table, instance, row);
-
-                                                       SetsNullableDateTimeValues(table, instance, row);
-                                                       SetsNullableBooleanValues(table, instance, row);
-                                                       SetsNullableIntValues(table, instance, row);
-                                                       SetsNullableDecimalValues(table, instance, row);
-
+                                                       LoadInstanceWithPropertyData(table, instance, row);
                                                        return instance;
                                                    });
 
             return enumerable;
+        }
+
+        private static void LoadInstanceWithPropertyData<T>(Table table, T instance, TableRow row)
+        {
+            foreach (var key in GetTypeHandlersForProperties().Keys)
+                SetData(table, instance, row, key);
+        }
+
+        private static void LoadInstanceWithKeyValuePairs<T>(Table table, T instance)
+        {
+            var handlers = GetTypeHandlersForFieldValuePairs();
+
+            var propertiesThatNeedToBeSet = (from property in typeof (T).GetProperties()
+                                             join key in handlers.Keys on property.PropertyType equals key
+                                             join row in table.Rows on property.Name equals row["Field"]
+                                             select new {Row = row, property.Name, Handler = handlers[key]});
+
+            propertiesThatNeedToBeSet.ToList()
+                .ForEach(x => instance.SetPropertyValue(x.Name, x.Handler(x.Row, x.Row["Value"])));
         }
 
         private static Dictionary<Type, Func<TableRow, string, object>> GetTypeHandlersForFieldValuePairs()
@@ -57,79 +57,31 @@ namespace SpecFlowAssist
                        };
         }
 
-        private static void SetsNullableDecimalValues<T>(Table table, T instance, TableRow row)
+        private static Dictionary<Type, Func<TableRow, string, object>> GetTypeHandlersForProperties()
         {
-            var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, typeof (decimal?));
+            return new Dictionary<Type, Func<TableRow, string, object>>
+                       {
+                           {typeof (string), (TableRow row, string id) => row.GetString(id)},
+                           {typeof (int), (TableRow row, string id) => row.GetInt(id)},
+                           {typeof (decimal), (TableRow row, string id) => row.GetDecimal(id)},
+                           {typeof (bool), (TableRow row, string id) => row.GetBool(id)},
+                           {typeof (DateTime), (TableRow row, string id) => row.GetDateTime(id)},
+                           {typeof (int?), (TableRow row, string id) => row.GetInt(id)},
+                           {typeof (decimal?), (TableRow row, string id) => row.GetDecimal(id)},
+                           {typeof (bool?), (TableRow row, string id) => row.GetBool(id)},
+                           {typeof (DateTime?), (TableRow row, string id) => row.GetDateTime(id)}
+                       };
+        }
+
+        private static void SetData<T>(Table table, T instance, TableRow row, Type type)
+        {
+            var handler = GetTypeHandlersForProperties()[type];
+            var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, type);
             foreach (var property in propertiesToUpdate)
                 if (string.IsNullOrEmpty(row[property]))
                     instance.SetPropertyValue(property, null);
                 else
-                    instance.SetPropertyValue(property, row.GetDecimal(property));
-        }
-
-        private static void SetsNullableIntValues<T>(Table table, T instance, TableRow row)
-        {
-            var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, typeof (int?));
-            foreach (var property in propertiesToUpdate)
-                if (string.IsNullOrEmpty(row[property]))
-                    instance.SetPropertyValue(property, null);
-                else
-                    instance.SetPropertyValue(property, row.GetInt(property));
-        }
-
-        private static void SetsNullableBooleanValues<T>(Table table, T instance, TableRow row)
-        {
-            var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, typeof (bool?));
-            foreach (var property in propertiesToUpdate)
-                if (string.IsNullOrEmpty(row[property]))
-                    instance.SetPropertyValue(property, null);
-                else
-                    instance.SetPropertyValue(property, row.GetBool(property));
-        }
-
-        private static void SetsBooleanValues<T>(Table table, T instance, TableRow row)
-        {
-            var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, typeof (bool));
-            foreach (var property in propertiesToUpdate)
-                instance.SetPropertyValue(property, row.GetBool(property));
-        }
-
-        private static void SetsDecimalValues<T>(Table table, T instance, TableRow row)
-        {
-            var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, typeof (decimal));
-            foreach (var property in propertiesToUpdate)
-                instance.SetPropertyValue(property, row.GetDecimal(property));
-        }
-
-        private static void SetsDateTimeValues<T>(Table table, T instance, TableRow row)
-        {
-            var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, typeof (DateTime));
-            foreach (var property in propertiesToUpdate)
-                instance.SetPropertyValue(property, row.GetDateTime(property));
-        }
-
-        private static void SetsNullableDateTimeValues<T>(Table table, T instance, TableRow row)
-        {
-            var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, typeof (DateTime?));
-            foreach (var property in propertiesToUpdate)
-                if (string.IsNullOrEmpty(row[property]))
-                    instance.SetPropertyValue(property, null);
-                else
-                    instance.SetPropertyValue(property, row.GetDateTime(property));
-        }
-
-        private static void SetIntValues<T>(Table table, T instance, TableRow row)
-        {
-            var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, typeof (int));
-            foreach (var property in propertiesToUpdate)
-                instance.SetPropertyValue(property, row.GetInt(property));
-        }
-
-        private static void SetStringValues<T>(Table table, T instance, TableRow row)
-        {
-            var propertiesToUpdate = GetPropertiesOfThisTypeToUpdate<T>(table, typeof (string));
-            foreach (var property in propertiesToUpdate)
-                instance.SetPropertyValue(property, row.GetString(property));
+                    instance.SetPropertyValue(property, handler(row, property));
         }
 
         private static IEnumerable<string> GetPropertiesOfThisTypeToUpdate<T>(Table table, Type type)
