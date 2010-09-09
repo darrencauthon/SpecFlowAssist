@@ -67,7 +67,6 @@
     <Compile Include="TableHelperExtensionMethods\CreateInstanceHelperMethodTests.cs" />
     <Compile Include="TableHelperExtensionMethods\CreateSetHelperMethodTests.cs" />
     <Compile Include="ObjectPersistenceExtensionMethodsTests.cs" />
-    <Compile Include="MockerExtensionMethodsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyExtensionMethodsTests.cs" />
     <Compile Include="RowExtensionMethodTests.cs" />
