@@ -5,7 +5,8 @@ SpecFlowAssist is a small library that I wrote to assist me when I use SpecFlow.
 
 Here are some of the methods that this library provides:
 
-** Get<T> and Set<T> extension methods off of ScenarioContext **
+Get<T> and Set<T> extension methods off of ScenarioContext
+---
 
 ScenarioContext.Current is a static instance that can be used to share objects across multiple step files.  You can save objects in it like so:
 
@@ -22,7 +23,8 @@ I like to avoid using strings and casting whenever possible, so I made a **Get<T
 	var repository = ScenarioContext.Current.Get<IAccountRepository>();
 	
 
-** CreateInstance<T> extenion methods off of SpecFlow.Table **
+CreateInstance<T> extenion methods off of SpecFlow.Table
+---
 
 After using SpecFlow for a while, I noticed that I was writing many steps that looked like this:
 
@@ -56,6 +58,5 @@ Obviously, this is pretty awkward.  So, I made a **CreateInstance<T>** method to
 	}
 
 The CreateInstance<T> method will create the account and fill the values according to any matching names it finds.  It also will use the appropriate casting or conversion to turn your string into the appropriate type.
-
 
 
