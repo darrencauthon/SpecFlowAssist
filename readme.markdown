@@ -38,7 +38,7 @@ After using SpecFlow for a while, I noticed that I was writing many steps that l
 And then in my step definition, I'd create a new Account and manually load its values from the SpecFlow.Table that is passed in to the method, like so:
 
 	[Given(@"Given I entered the following data into the new account form:")]
-	public void ThenIShouldHaveTheFollowingDataInMyRepository(Table table)
+	public void x(Table table)
 	{
 		var account = new Account();
 		account.Name = table.Rows.First(x => x["Field"] == "Name")["Value"];
@@ -59,4 +59,39 @@ Obviously, this is pretty awkward.  So, I made a **CreateInstance<T>** method to
 
 The CreateInstance<T> method will create the account and fill the values according to any matching names it finds.  It also will use the appropriate casting or conversion to turn your string into the appropriate type.
 
+CreateSet<T> extenion methods off of SpecFlow.Table
+---
 
+I also found myself writing many steps that were similar to this:
+
+	Given these products exist
+	| Sku              | Name             | Price |
+	| BOOK1            | Atlas Shrugged   | 25.04 |
+	| BOOK2            | The Fountainhead | 20.15 |
+
+Then I'd have to write a step definition like so:
+
+	[Given(@"Given these products exist")]
+	public void x(Table table)
+	{
+
+		var products = table.Rows.Select(row => new Product(){
+														       Sku = row["Sku"],
+															   Name = row["Name"],
+															   Name = row["Name"],
+												     		 });
+		// ...
+	}
+
+Which I think is still a little awkward.  Plus, whenever the fields on Product would change I'd have to go back to this step definition to alter it.  
+
+So, I made a **CreateSet<T>** method to turn the code above into:
+
+	[Given(@"Given these products exist")]
+	public void x(Table table)
+	{
+		var products = table.CreateSet<Product>();
+		// ...
+	}
+
+The CreateSet<T> method will return an IEnumerable<T> based on the data that matches in the table.
