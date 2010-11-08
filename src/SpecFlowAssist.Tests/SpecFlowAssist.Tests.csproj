@@ -64,7 +64,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InstanceComparisonExtensionMethodsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetComparisonExtensionMethods_MessageTests.cs" />
+    <Compile Include="SetComparisonExtensionMethods_ThrowTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpecFlowAssist\SpecFlowAssist.csproj">
