@@ -66,7 +66,7 @@ You can test you results with one call to CompareToSet<T>, like so:
     public void x(Table table){
       var accounts = ScenarioContext.Current.Get<IEnumerable<Account>>();
       
-      accounts.CompareToSet<Account>(accounts)
+      table.CompareToSet<Account>(accounts)
     }
 
 CompareToSet<T> will test that two accounts were returned, and it will test only the properties that you define in the table.  **It does not test the order of the objects, only that one was found that matches.**  If it cannot find a record that matches the properties in your table, the exception that is thrown will return the row number(s) that did not match.
