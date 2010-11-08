@@ -8,6 +8,8 @@ Here are some of the methods that this library provides:
 Get<T> and Set<T> extension methods off of ScenarioContext
 ---
 
+** Moved from SpecFlowAssist to SpecFlow v.1.4.  If you are using an earlier version of SpecFlow, please download the pre-1.4 version of SpecFlowAssist. **
+
 ScenarioContext.Current is a static instance that can be used to share objects across multiple step files.  You can save objects in it like so:
 
 	ScenarioContext.Current["AccountRepository"] = new AccountRepository();
@@ -25,6 +27,8 @@ I like to avoid using strings and casting whenever possible, so I made a **Get<T
 
 CreateInstance<T> extenion methods off of SpecFlow.Table
 ---
+
+** Moved from SpecFlowAssist to SpecFlow v.1.4.  If you are using an earlier version of SpecFlow, please download the pre-1.4 version of SpecFlowAssist. **
 
 After using SpecFlow for a while, I noticed that I was writing many steps that looked like this:
 
@@ -61,6 +65,8 @@ The CreateInstance<T> method will create the account and fill the values accordi
 
 CreateSet<T> extenion methods off of SpecFlow.Table
 ---
+
+** Moved from SpecFlowAssist to SpecFlow v.1.4.  If you are using an earlier version of SpecFlow, please download the pre-1.4 version of SpecFlowAssist. **
 
 I also found myself writing many steps that were similar to this:
 
