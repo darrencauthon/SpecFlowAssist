@@ -16,13 +16,16 @@ This method makes it easy to compare the properties of an object against a table
 
 and you want to compare it to a table in a step like this:
 
+  
   Then the person should have the following values
   | Field     | Value |
   | FirstName | John  |
   | LastName  | Galt  |
+
   
 You can assert that the properties match with this simple step definition:
 
+  
   [Then("the person should have the following values")]
   public void x(Table table){
     // you don't have to get person this way, this is just for demo
