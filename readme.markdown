@@ -11,7 +11,8 @@ CompareToInstance<T> extension methods off of SpecFlow.Table
 This method makes it easy to compare the properties of an object against a table. For example, say you have a class like this:
 
     public class Person {
-      public string FirstName { get; set;}  
+      public string FirstName { get; set;}
+      public string LastName { get; set;}  
     }
 
 and you want to compare it to a table in a step like this:
