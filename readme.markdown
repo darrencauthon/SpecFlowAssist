@@ -8,8 +8,11 @@ After sharing this library with the community, I got some positive feedback.  In
 I'm going to keep this repository around for a while, but my intention is to contribute all future work directly to the SpecFlow project itself.  It's the easiest
 
 If you want to see the latest documentation on the helpers, checkout the following wikis:
-https://github.com/techtalk/SpecFlow/wiki/SpecFlow-Assist-Helpers
-https://github.com/techtalk/SpecFlow/wiki/ScenarioContext
+
+[SpecFlow.Assist](https://github.com/techtalk/SpecFlow/wiki/SpecFlow-Assist-Helpers "SpecFlow Assist")
+
+[ScenarioContext](https://github.com/techtalk/SpecFlow/wiki/ScenarioContext "ScenarioContext")
 
 If you want to watch a video demo, check out the following video on Tekpub:
-http://tekpub.com/view/dotnet-oss/6
+
+[Tekpub Video](http://tekpub.com/view/dotnet-oss/6)
